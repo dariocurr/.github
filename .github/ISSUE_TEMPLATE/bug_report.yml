@@ -1,0 +1,61 @@
+name: "🐛 Bug Report"
+description: Create a new issue to report a bug
+title: "🐛 <title>"
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: Please enter an explicit description of your issue
+      placeholder: Short and explicit description of your incident
+    validations:
+      required: true
+  - type: textarea
+    id: reprod
+    attributes:
+      label: "Reproduction steps"
+      description: Please enter an explicit description of your issue
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      render: bash
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: "Version"
+      description: Please indicate affected version of the component
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: "Screenshots"
+      description: If applicable, add screenshots to help explain your problem
+      placeholder: |
+        ![DESCRIPTION](LINK.png)
+      render: bash
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs"
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks
+      placeholder: The logs provided by the application
+      render: bash
+    validations:
+      required: false
+  - type: textarea
+    id: fix
+    attributes:
+      label: "Fix"
+      description: Please indicate a fix description if you already have one suggestion
+      placeholder: A suggestion to fix the bug
+      render: bash
+    validations:
+      required: false
