@@ -1,6 +1,6 @@
 [submodule "checkout-called"]
-	path = checkout-called
+	path = .github/actions/checkout-called
 	url = git@github.com:dariocurr/checkout-called
 [submodule "pytest-summary"]
-	path = pytest-summary
+	path = .github/actions/pytest-summary
 	url = git@github.com:dariocurr/pytest-summary
