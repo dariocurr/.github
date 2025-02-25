@@ -5,13 +5,12 @@ import yaml
 
 
 def _get_action_version(
-    session: nox.Session,
     action_file_path: str = "action.yml",
 ) -> str:
     with open(file=action_file_path) as stream:
         action = yaml.safe_load(stream=stream)
     steps = action["runs"]["steps"]
-    action_to_track = session.env["ACTION_TO_TRACK"]
+    action_to_track = os.environ["ACTION_TO_TRACK"]
     for step in steps:
         used_action: str = step.get("uses", "")
         if used_action.startswith(action_to_track):
@@ -20,21 +19,19 @@ def _get_action_version(
 
 
 def _set_output(
-    session: nox.Session,
     key: str,
     value: str,
 ):
-    output_file = session.env["GITHUB_OUTPUT"]
+    output_file = os.environ["GITHUB_OUTPUT"]
     with open(file=output_file, mode="a") as f:
         f.write(f"{key}={value}\n")
 
 
 @nox.session
 def update_tags(session: nox.Session):
-    os.chdir(session.env["GITHUB_WORKSPACE"])
-    version = _get_action_version(session=session)
+    os.chdir(os.environ["GITHUB_WORKSPACE"])
+    version = _get_action_version()
     _set_output(
-        session=session,
         key="tag",
         value=version,
     )
