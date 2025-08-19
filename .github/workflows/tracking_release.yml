@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   workflow_call:
@@ -9,32 +9,34 @@ on:
 
 jobs:
   release:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
-      - name: Checkout origin repo
+      - name: checkout origin repo
         uses: actions/checkout@v4.1.7
 
-      - name: Checkout this repo
+      - name: checkout called repo
         uses: dariocurr/checkout-called@v4.1.7
         with:
           path: .git/ci/
 
-      - name: Set up Python
+      - name: set up python
         uses: actions/setup-python@main
         with:
           python-version: "3.12"
 
-      - name: Install Python dependencies
+      - name: install python dependencies
         run: pip install --disable-pip-version-check nox pyyaml
 
-      - name: Update tags
+      - name: update tags
         env:
           ACTION_TO_TRACK: ${{ inputs.action_to_track }}
         id: tags
         run: nox -f .git/ci/utils/github.py --session update_tags
 
-      - name: Create Github release
+      - name: create github release
         uses: softprops/action-gh-release@v2.0.8
         with:
           tag_name: ${{ steps.tags.outputs.tag }}

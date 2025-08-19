@@ -1,28 +1,30 @@
-name: Validate Dockerfile
+name: validate Dockerfile
 
 on:
   workflow_call:
     inputs:
       dockerfile:
-        description: Path to `Dockerfile`
+        description: path to `Dockerfile`
         required: true
         type: string
       from:
-        description: Origin branch
+        description: origin branch
         required: false
         type: string
       to:
-        description: Target branch
+        description: target branch
         required: false
         type: string
 
 jobs:
   validate:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
 
-      - name: Build Dockerfile in ${{ inputs.dockerfile }}
+      - name: build Dockerfile in ${{ inputs.dockerfile }}
         uses: docker/build-push-action@master
         with:
           push: false
@@ -33,11 +35,11 @@ jobs:
     if: ${{ inputs.from }} && ${{ inputs.to }}
     runs-on: ubuntu-latest
     steps:
-      - name: Merge ${{ inputs.from }} in ${{ inputs.to }} branch
+      - name: merge ${{ inputs.from }} in ${{ inputs.to }} branch
         uses: devmasx/merge-branch@master
         with:
           type: now
           from_branch: ${{ inputs.from }}
           target_branch: ${{ inputs.to }}
           github_token: ${{ github.token }}
-          message: Merging ${{ inputs.from }} into ${{ inputs.to }} using Github Actions
+          message: merging ${{ inputs.from }} into ${{ inputs.to }} using github actions
